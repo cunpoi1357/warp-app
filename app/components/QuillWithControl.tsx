@@ -1,6 +1,7 @@
+import dynamic from 'next/dynamic'
 import React, { useId } from 'react'
 import { Control, Controller, FieldValues } from 'react-hook-form'
-import ReactQuill from 'react-quill'
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 interface Props {
     className?: string

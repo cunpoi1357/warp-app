@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 import Button from '~/app/components/Button'
 import Modal from '~/app/components/Modal'
-import Quill from '~/app/components/Quill'
+const Quill = dynamic(() => import('~/app/components/Quill'), { ssr: false })
 
 interface Props {
     onCreate: (title: string, content: string) => void

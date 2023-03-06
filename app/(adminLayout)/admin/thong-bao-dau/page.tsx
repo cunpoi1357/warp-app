@@ -1,9 +1,10 @@
 'use client'
+import dynamic from 'next/dynamic'
 import React, { useContext, useEffect, useState } from 'react'
 import Button from '~/app/components/Button'
-import Quill from '~/app/components/Quill'
 import { Notify } from 'notiflix/build/notiflix-notify-aio'
 import AuthContext from '~/app/Context/AuthContext'
+const Quill = dynamic(() => import('~/app/components/Quill'), { ssr: false })
 
 function ThongBaoDau() {
     const [data, setData] = useState<string>('')

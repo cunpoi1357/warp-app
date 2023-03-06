@@ -1,7 +1,8 @@
 'use client'
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
+import dynamic from 'next/dynamic'
 import React, { useEffect, useState } from 'react'
-import ReactQuill from 'react-quill'
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 import { IPost } from '~/app/types'
 
 function Page({ params }: { params: Params }) {

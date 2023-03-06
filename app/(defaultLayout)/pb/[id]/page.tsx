@@ -1,8 +1,9 @@
 'use client'
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
+import dynamic from 'next/dynamic'
 import React, { useEffect, useState } from 'react'
-import ReactQuill from 'react-quill'
 import { IPB } from '~/app/types'
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 function Page({ params }: { params: Params }) {
     const [data, setData] = useState<IPB>()

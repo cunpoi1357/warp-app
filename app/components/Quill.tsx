@@ -1,6 +1,7 @@
 'use client'
+import dynamic from 'next/dynamic'
 import React from 'react'
-import ReactQuill from 'react-quill'
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 interface IQuillProps {
     className?: string

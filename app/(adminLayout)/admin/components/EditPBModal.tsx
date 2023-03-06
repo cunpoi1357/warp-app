@@ -3,7 +3,6 @@ import { Dialog } from '@headlessui/react'
 import React, { useState } from 'react'
 
 import Modal from '~/app/components/Modal'
-import Quill from '~/app/components/Quill'
 import { PencilSquareIcon } from '@heroicons/react/24/outline'
 import { IPB } from '~/app/types'
 import QuillWithControl from '~/app/components/QuillWithControl'

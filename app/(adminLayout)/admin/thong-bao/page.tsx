@@ -1,4 +1,5 @@
 'use client'
+import dynamic from 'next/dynamic'
 import { useState, useEffect, useContext } from 'react'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { IPost } from '~/app/types'
@@ -6,9 +7,9 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio'
 import { Confirm } from 'notiflix/build/notiflix-confirm-aio'
 
 import CreateNewPostModal from '../components/CreateNewPostModal'
-import ReactQuill from 'react-quill'
 import EditPostModal from '../components/EditPostModal'
 import AuthContext from '~/app/Context/AuthContext'
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 function ThongBao() {
     const [data, setData] = useState<IPost[]>([])
