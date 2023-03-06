@@ -1,7 +1,7 @@
 import prisma from '~/app/libs/prisma'
 
 export async function GET(
-    request,
+    request: any,
     {
         params
     }: {

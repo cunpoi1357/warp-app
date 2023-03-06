@@ -3,7 +3,7 @@ import prisma from '~/app/libs/prisma'
 import checkIsAdmin from '~/app/services/checkIsAdmin'
 
 export async function GET() {
-    const data = await prisma.PB.findMany({
+    const data = await prisma.pB.findMany({
         orderBy: [
             {
                 createdAt: 'asc'
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     }
     const isAdmin = await checkIsAdmin(idToken as string)
     if (isAdmin) {
-        await prisma.PB.create({
+        await prisma.pB.create({
             data: body
         })
         return new Response('Create a PB successful', { status: 201 })
@@ -42,7 +42,7 @@ export async function PUT(req: Request) {
     const { id, ...data } = body
 
     if (isAdmin) {
-        await prisma.PB.update({
+        await prisma.pB.update({
             where: {
                 id: Number(id)
             },
@@ -69,7 +69,7 @@ export async function DELETE(req: Request) {
     const { id } = body
 
     if (isAdmin) {
-        await prisma.PB.delete({
+        await prisma.pB.delete({
             where: {
                 id: Number(id)
             }

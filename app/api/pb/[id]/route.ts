@@ -1,15 +1,15 @@
 import prisma from '~/app/libs/prisma'
 
 export async function GET(
-    request,
+    request: any,
     {
         params
     }: {
-        request: Request
+        request: any
         params: { id: string }
     }
 ) {
-    const pb = await prisma.PB.findUnique({
+    const pb = await prisma.pB.findUnique({
         where: { id: Number(params.id) }
     })
 
