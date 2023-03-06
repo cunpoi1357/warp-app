@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-shadow {
+    text-shadow: 2px 0 red, -2px 0 red, 0 2px red, 0 -2px red,
+    1px 1px red, -1px -1px red, 1px -1px red, -1px 1px red;
+}
