@@ -1,5 +1,6 @@
 'use client'
 import { Dialog } from '@headlessui/react'
+import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
 
 import Button from '~/app/components/Button'
