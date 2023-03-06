@@ -24,7 +24,9 @@ const fetchThuTu = async () => {
             case 'tbd':
                 return <ThongBaoDau key={section.id} />
             case 'tb':
+                /* @ts-expect-error Server Component */
                 return <ThongBao key={section.id} />
+
             case 'kvbxtd':
                 return <KhuVucBanXuTuDong key={section.id} />
             case 'kvbvltd':
@@ -34,6 +36,7 @@ const fetchThuTu = async () => {
             case 'bhmcn':
                 return <BanHotMoiCapNhat key={section.id} />
             case 'kvpbmns':
+                /* @ts-expect-error Server Component */
                 return <KhuVucModPB key={section.id} />
             case 'kvtgl':
                 return <KhuVucGiaLap key={section.id} />
