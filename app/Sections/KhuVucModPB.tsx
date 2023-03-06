@@ -1,19 +1,19 @@
+'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Section from '../components/Section'
 import { IPB } from '../types'
 
-const fetchData = async () => {
-    const res = await fetch(`${process.env.BASE_FETCH_URL}/api/pb`, {
-        method: 'GET',
-        cache: 'reload'
-    })
+function KhuVucModPB() {
+    const [data, setData] = useState<IPB[]>([])
 
-    return await res.json()
-}
-
-async function KhuVucModPB() {
-    const data = await fetchData()
+    useEffect(() => {
+        fetch('/api/pb', {
+            cache: 'no-cache'
+        })
+            .then(res => res.json())
+            .then(value => setData(value))
+    }, [])
     return (
         <Section title='» Khu vực PB mod ninja school' className='bg-dark-teal'>
             {' '}

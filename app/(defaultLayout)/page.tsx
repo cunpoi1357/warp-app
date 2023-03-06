@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import BanHotMoiCapNhat from '../Sections/BanHotMoiCapNhat'
 import BanTool from '../Sections/BanTool'
 import KhuVucBanNickNinjaSchool from '../Sections/KhuVucBanNickNinjaSchool'
@@ -11,12 +12,18 @@ import ThongBaoDau from '../Sections/ThongBaoDau'
 import Top from '../Sections/Top'
 import { ISection } from '../types'
 
-const fetchThuTu = async () => {
-    const data = await fetch('http://localhost:3000/api/thu-tu', {
-        cache: 'no-cache'
-    })
-    const thuTu: ISection[] = await data.json()
-    const Sections = thuTu.map(section => {
+function HomePage() {
+    const [data, setData] = useState<ISection[]>([])
+
+    useEffect(() => {
+        fetch('/api/thu-tu', {
+            cache: 'no-cache'
+        })
+            .then(res => res.json())
+            .then(value => setData(value))
+    }, [])
+
+    const Sections = data.map(section => {
         if (section.hidden) {
             return null
         }
@@ -24,9 +31,7 @@ const fetchThuTu = async () => {
             case 'tbd':
                 return <ThongBaoDau key={section.id} />
             case 'tb':
-                /* @ts-expect-error Server Component */
                 return <ThongBao key={section.id} />
-
             case 'kvbxtd':
                 return <KhuVucBanXuTuDong key={section.id} />
             case 'kvbvltd':
@@ -36,7 +41,6 @@ const fetchThuTu = async () => {
             case 'bhmcn':
                 return <BanHotMoiCapNhat key={section.id} />
             case 'kvpbmns':
-                /* @ts-expect-error Server Component */
                 return <KhuVucModPB key={section.id} />
             case 'kvtgl':
                 return <KhuVucGiaLap key={section.id} />
@@ -48,12 +52,8 @@ const fetchThuTu = async () => {
                 break
         }
     })
-    return Sections
-}
 
-async function HomePage() {
-    const thuTu = await fetchThuTu()
-    return <>{thuTu}</>
+    return <>{Sections}</>
 }
 
 export default HomePage

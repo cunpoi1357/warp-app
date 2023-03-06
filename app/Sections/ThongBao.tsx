@@ -1,19 +1,19 @@
+'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Section from '../components/Section'
 import { IPost } from '../types'
 
-const fetchData = async () => {
-    const res = await fetch(`${process.env.BASE_FETCH_URL}/api/thong-bao`, {
-        method: 'GET',
-        cache: 'reload'
-    })
+function ThongBao() {
+    const [data, setData] = useState<IPost[]>([])
 
-    return await res.json()
-}
-
-async function ThongBao() {
-    const data = await fetchData()
+    useEffect(() => {
+        fetch('/api/thong-bao', {
+            cache: 'no-cache'
+        })
+            .then(res => res.json())
+            .then(value => setData(value))
+    }, [])
     return (
         <Section title='» THÔNG TIN MỚI' className='bg-turquoise'>
             <ul>
