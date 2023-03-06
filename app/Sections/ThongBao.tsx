@@ -22,11 +22,7 @@ function ThongBao() {
                         key={item.id}
                         className='border-b cursor-pointer hover:underline'
                     >
-                        <Link
-                            href={`${process.env.BASE_FETCH_URL}/thong-bao/${item.id}`}
-                        >
-                            {item.title}
-                        </Link>
+                        <Link href={`/thong-bao/${item.id}`}>{item.title}</Link>
                     </li>
                 ))}
             </ul>
