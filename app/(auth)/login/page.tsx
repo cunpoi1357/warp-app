@@ -12,36 +12,9 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio'
 
 import Input from '~/app/components/Input'
 import { auth } from '~/app/libs/firebase'
-function setWithExpiry(key: string, value: string, ttl: number) {
-    const now = new Date()
-
-    const item = {
-        value: value,
-        expiry: now.getTime() + ttl
-    }
-    window.localStorage.setItem(key, JSON.stringify(item))
-}
-
-function getWithExpiry(key: string) {
-    const itemStr = window.localStorage.getItem(key)
-    if (!itemStr) {
-        return null
-    }
-    const item = JSON.parse(itemStr)
-    const now = new Date()
-
-    if (now.getTime() > item.expiry) {
-        window.localStorage.removeItem(key)
-        return null
-    }
-    return item.value
-}
 
 function LoginPage() {
-    const { control, handleSubmit, getValues, setValue } = useForm()
-    const [rememberMe, setRememberMe] = useState<boolean | undefined>(() => {
-        return Boolean(getWithExpiry('email'))
-    })
+    const { control, handleSubmit } = useForm()
     const router = useRouter()
 
     onAuthStateChanged(auth, data => {
@@ -51,14 +24,6 @@ function LoginPage() {
     })
 
     const onSubmit = handleSubmit(data => {
-        if (rememberMe) {
-            setWithExpiry('email', getValues('email'), 1000 * 3600 * 24 * 7)
-            setWithExpiry(
-                'password',
-                getValues('password'),
-                1000 * 3600 * 24 * 7
-            )
-        }
         signInWithEmailAndPassword(auth, data.email, data.password)
             .then(() => {
                 router.push('/admin')
@@ -66,22 +31,6 @@ function LoginPage() {
             })
             .catch(error => Notify.warning(error.message))
     })
-
-    useEffect(() => {
-        if (!rememberMe) {
-            setWithExpiry('email', '', 1000 * 3600 * 24 * 7)
-            setWithExpiry('password', '', 1000 * 3600 * 24 * 7)
-        }
-    }, [rememberMe])
-
-    useEffect(() => {
-        const email = getWithExpiry('email')
-        const password = getWithExpiry('password')
-        if (email && password) {
-            setValue('email', email)
-            setValue('password', password)
-        }
-    }, [setValue])
 
     return (
         <div className='flex flex-col items-center justify-center h-screen py-12 sm:px-6 lg:px-8'>
@@ -127,25 +76,18 @@ function LoginPage() {
 
                         <div className='flex items-center justify-between'>
                             <div className='flex items-center'>
-                                <input
+                                {/* <input
                                     id='remember-me'
                                     name='remember-me'
                                     type='checkbox'
                                     className='w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500'
-                                    onChange={e =>
-                                        setRememberMe(
-                                            (e.target as HTMLInputElement)
-                                                .checked
-                                        )
-                                    }
-                                    checked={rememberMe}
                                 />
                                 <label
                                     htmlFor='remember-me'
                                     className='block ml-2 text-sm text-gray-900'
                                 >
                                     Ghi nhớ
-                                </label>
+                                </label> */}
                             </div>
 
                             <div className='text-sm'>
