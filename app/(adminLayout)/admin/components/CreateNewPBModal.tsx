@@ -45,13 +45,14 @@ function CreateNewPBModal({ onCreate }: Props) {
                     </Dialog.Title>
                     <form onSubmit={onSubmit}>
                         <div className='flex flex-col gap-4 mt-2'>
-                            <Input
+                            <QuillWithControl
                                 control={control}
                                 name='name'
                                 label='Tên'
                                 rules={{
                                     required: 'Vui lòng nhập tên'
                                 }}
+                                className='mb-4'
                             />
                             <QuillWithControl
                                 className='mb-16 h-28'

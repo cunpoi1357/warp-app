@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import React, { useId } from 'react'
-import { Control, Controller, FieldValues } from 'react-hook-form'
+import { Control, Controller, RegisterOptions } from 'react-hook-form'
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 interface Props {
@@ -8,7 +8,10 @@ interface Props {
     name: string
     control: Control<any, any>
     label: string
-    rules?: { [key: string]: object }
+    rules?: Omit<
+        RegisterOptions<any, any>,
+        'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+    >
     [prop: string]: any
 }
 

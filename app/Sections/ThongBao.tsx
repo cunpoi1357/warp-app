@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Section from '../components/Section'
 import { IPost } from '../types'
+import parse from 'html-react-parser'
 
 function ThongBao() {
     const [data, setData] = useState<IPost[]>([])
@@ -22,7 +23,9 @@ function ThongBao() {
                         key={item.id}
                         className='border-b cursor-pointer hover:underline'
                     >
-                        <Link href={`/thong-bao/${item.id}`}>{item.title}</Link>
+                        <Link href={`/thong-bao/${item.id}`}>
+                            {parse(item.title)}
+                        </Link>
                     </li>
                 ))}
             </ul>

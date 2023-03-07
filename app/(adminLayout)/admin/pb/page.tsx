@@ -3,6 +3,7 @@ import { TrashIcon } from '@heroicons/react/24/outline'
 import React, { useContext, useEffect, useState } from 'react'
 import { Notify } from 'notiflix/build/notiflix-notify-aio'
 import { Confirm } from 'notiflix/build/notiflix-confirm-aio'
+import parse from 'html-react-parser'
 
 import AuthContext from '~/app/Context/AuthContext'
 import { IPB } from '~/app/types'
@@ -106,7 +107,8 @@ function Page() {
                                 <tr key={item.id} className='bg-white border-b'>
                                     <td className='px-6 py-4'>{item.name}</td>
                                     <td className='px-6 py-4'>
-                                        {item.description}
+                                        {item.description &&
+                                            parse(item.description)}
                                     </td>
                                     <td className='px-6 py-4'>
                                         <Link

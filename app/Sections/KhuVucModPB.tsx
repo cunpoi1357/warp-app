@@ -23,11 +23,7 @@ function KhuVucModPB() {
                         key={item.id}
                         className='border-b cursor-pointer hover:underline'
                     >
-                        <Link
-                            href={`${process.env.BASE_FETCH_URL}/pb/${item.id}`}
-                        >
-                            {item.name}
-                        </Link>
+                        <Link href={`/pb/${item.id}`}>{item.name}</Link>
                     </li>
                 ))}
             </ul>

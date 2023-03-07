@@ -32,7 +32,7 @@ function Input({
 
     const id = useId()
     return (
-        <div>
+        <div className={className}>
             <label
                 htmlFor={id}
                 className='block text-sm font-medium text-gray-700'

@@ -1,8 +1,7 @@
 'use client'
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
-import dynamic from 'next/dynamic'
 import React, { useEffect, useState } from 'react'
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
+import parse from 'html-react-parser'
 import { IPost } from '~/app/types'
 
 function Page({ params }: { params: Params }) {
@@ -19,7 +18,7 @@ function Page({ params }: { params: Params }) {
     return (
         <section className='mb-32 text-gray-800'>
             <h1 className='mb-4 text-3xl font-bold'>{data?.title}</h1>
-            <ReactQuill value={data?.content} readOnly theme='bubble' />
+            {data?.content && parse(data?.content)}
         </section>
     )
 }
