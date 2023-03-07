@@ -1,16 +1,24 @@
 'use client'
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import {
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    setPersistence
+} from 'firebase/auth'
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React, { MouseEventHandler, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { Notify } from 'notiflix/build/notiflix-notify-aio'
 
 import Input from '~/app/components/Input'
 import { auth } from '~/app/libs/firebase'
+import { getWithExpiry, setWithExpiry } from '~/app/libs/localStorage'
 
 function LoginPage() {
-    const { control, handleSubmit } = useForm()
+    const { control, handleSubmit, getValues, setValue } = useForm()
+    const [rememberMe, setRememberMe] = useState<boolean | undefined>(() => {
+        return Boolean(getWithExpiry('email'))
+    })
     const router = useRouter()
 
     onAuthStateChanged(auth, data => {
@@ -20,6 +28,14 @@ function LoginPage() {
     })
 
     const onSubmit = handleSubmit(data => {
+        if (rememberMe) {
+            setWithExpiry('email', getValues('email'), 1000 * 3600 * 24 * 7)
+            setWithExpiry(
+                'password',
+                getValues('password'),
+                1000 * 3600 * 24 * 7
+            )
+        }
         signInWithEmailAndPassword(auth, data.email, data.password)
             .then(() => {
                 router.push('/admin')
@@ -27,6 +43,23 @@ function LoginPage() {
             })
             .catch(error => Notify.warning(error.message))
     })
+
+    useEffect(() => {
+        if (!rememberMe) {
+            setWithExpiry('email', '', 1000 * 3600 * 24 * 7)
+            setWithExpiry('password', '', 1000 * 3600 * 24 * 7)
+        }
+    }, [rememberMe])
+
+    useEffect(() => {
+        const email = getWithExpiry('email')
+        const password = getWithExpiry('password')
+        if (email && password) {
+            setValue('email', email)
+            setValue('password', password)
+        }
+    }, [setValue])
+
     return (
         <div className='flex flex-col items-center justify-center h-screen py-12 sm:px-6 lg:px-8'>
             <div className='sm:mx-auto sm:w-full sm:max-w-md'>
@@ -76,6 +109,13 @@ function LoginPage() {
                                     name='remember-me'
                                     type='checkbox'
                                     className='w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500'
+                                    onChange={e =>
+                                        setRememberMe(
+                                            (e.target as HTMLInputElement)
+                                                .checked
+                                        )
+                                    }
+                                    checked={rememberMe}
                                 />
                                 <label
                                     htmlFor='remember-me'

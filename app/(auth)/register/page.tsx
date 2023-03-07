@@ -1,74 +1,74 @@
+'use client'
 import Link from 'next/link'
 import React from 'react'
+import { useForm } from 'react-hook-form'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { Notify } from 'notiflix/build/notiflix-notify-aio'
 
-function page() {
+import Input from '~/app/components/Input'
+import { auth } from '~/app/libs/firebase'
+import { useRouter } from 'next/navigation'
+
+function Page() {
+    const { handleSubmit, control, getValues } = useForm()
+    const router = useRouter()
+    const onSubmit = handleSubmit(data =>
+        createUserWithEmailAndPassword(auth, data.email, data.password)
+            .then(() => {
+                Notify.success('Đăng kí thành công')
+                router.push('/login')
+            })
+            .catch(error => Notify.warning(error.message))
+    )
     return (
-        <div className='h-screen flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8'>
+        <div className='flex flex-col items-center justify-center h-screen py-12 sm:px-6 lg:px-8'>
             <div className='sm:mx-auto sm:w-full sm:max-w-md'>
-                <h2 className='mt-6 text-center text-3xl font-bold text-gray-900'>
+                <h2 className='mt-6 text-3xl font-bold text-center text-gray-900'>
                     Đăng kí tài khoản
                 </h2>
             </div>
 
             <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-sm'>
-                <div className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'>
-                    <form className='space-y-6' action='#' method='POST'>
-                        <div>
-                            <label
-                                htmlFor='email'
-                                className='block text-sm font-medium text-gray-700'
-                            >
-                                Email
-                            </label>
-                            <div className='mt-1'>
-                                <input
-                                    id='email'
-                                    name='email'
-                                    type='email'
-                                    autoComplete='email'
-                                    required
-                                    className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-                                />
-                            </div>
-                        </div>
+                <div className='px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10'>
+                    <form className='space-y-6' onSubmit={onSubmit}>
+                        <Input
+                            control={control}
+                            name='email'
+                            label='Email'
+                            rules={{
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: 'Email không hợp lệ.'
+                                },
+                                required: 'Vui lòng nhập email.'
+                            }}
+                        />
 
-                        <div>
-                            <label
-                                htmlFor='password'
-                                className='block text-sm font-medium text-gray-700'
-                            >
-                                Mật khẩu
-                            </label>
-                            <div className='mt-1'>
-                                <input
-                                    id='password'
-                                    name='password'
-                                    type='password'
-                                    autoComplete='current-password'
-                                    required
-                                    className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor='retype_password'
-                                className='block text-sm font-medium text-gray-700'
-                            >
-                                Nhập lại mật khẩu
-                            </label>
-                            <div className='mt-1'>
-                                <input
-                                    id='retype_password'
-                                    name='retype_password'
-                                    type='retype_password'
-                                    autoComplete='current-password'
-                                    required
-                                    className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            control={control}
+                            name='password'
+                            type='password'
+                            label='Mật khẩu'
+                            rules={{
+                                pattern: {
+                                    value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i,
+                                    message: 'Mật khẩu quá đơn giản.'
+                                },
+                                required: 'Vui lòng nhập mật khẩu.'
+                            }}
+                        />
+                        <Input
+                            control={control}
+                            name='retype_password'
+                            type='password'
+                            label='Nhập lại mật khẩu'
+                            rules={{
+                                validate: (value: string) =>
+                                    value === getValues('password') ||
+                                    'Mật khẩu không khớp',
+                                required: 'Vui lòng nhập lại mật khẩu.'
+                            }}
+                        />
 
                         <div className='flex items-center justify-between'>
                             <div className='text-sm'>
@@ -85,7 +85,7 @@ function page() {
                         <div>
                             <button
                                 type='submit'
-                                className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                                className='flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
                             >
                                 Đăng kí
                             </button>
@@ -97,4 +97,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

@@ -16,7 +16,9 @@ export default function RootLayout({
             <head></head>
             <body className='flex flex-col max-w-5xl gap-6 mx-auto bg-light-gray'>
                 <Header />
-                <main className='flex flex-col gap-6'>{children}</main>
+                <main className='flex flex-col gap-6 min-h-[calc(100vh-200px)]'>
+                    {children}
+                </main>
                 <Footer />
             </body>
         </html>

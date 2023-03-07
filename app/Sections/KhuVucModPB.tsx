@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Section from '../components/Section'
 import { IPB } from '../types'
+import parse from 'html-react-parser'
 
 function KhuVucModPB() {
     const [data, setData] = useState<IPB[]>([])
@@ -23,7 +24,7 @@ function KhuVucModPB() {
                         key={item.id}
                         className='border-b cursor-pointer hover:underline'
                     >
-                        <Link href={`/pb/${item.id}`}>{item.name}</Link>
+                        <Link href={`/pb/${item.id}`}>{parse(item.name)}</Link>
                     </li>
                 ))}
             </ul>

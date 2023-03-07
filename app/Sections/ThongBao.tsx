@@ -23,9 +23,19 @@ function ThongBao() {
                         key={item.id}
                         className='border-b cursor-pointer hover:underline'
                     >
-                        <Link href={`/thong-bao/${item.id}`}>
-                            {parse(item.title)}
-                        </Link>
+                        {item.link ? (
+                            <a
+                                href={item.link}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                            >
+                                {parse(item.title)}
+                            </a>
+                        ) : (
+                            <Link href={`/thong-bao/${item.id}`}>
+                                {parse(item.title)}
+                            </Link>
+                        )}
                     </li>
                 ))}
             </ul>

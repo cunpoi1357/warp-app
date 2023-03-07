@@ -25,7 +25,7 @@ function EditPBModal({ data, onUpdate }: Props) {
 
     const onSubmit = handleSubmit(data => {
         onUpdate(data as IPB)
-        reset()
+        reset(data)
         handleCloseModal()
     })
 
@@ -47,13 +47,14 @@ function EditPBModal({ data, onUpdate }: Props) {
                     </Dialog.Title>
                     <form onSubmit={onSubmit}>
                         <div className='flex flex-col gap-4 mt-2'>
-                            <Input
+                            <QuillWithControl
                                 control={control}
                                 name='name'
                                 label='Tên'
                                 rules={{
                                     required: 'Vui lòng nhập tên'
                                 }}
+                                className='mb-4'
                             />
                             <QuillWithControl
                                 className='mb-16 h-28'
@@ -61,6 +62,7 @@ function EditPBModal({ data, onUpdate }: Props) {
                                 name='description'
                                 label='Mô tả'
                             />
+                            <label htmlFor='file'>Chọn tệp tin</label>
                             <Input
                                 control={control}
                                 name='path'
