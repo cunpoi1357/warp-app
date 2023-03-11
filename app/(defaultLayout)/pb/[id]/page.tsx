@@ -3,6 +3,7 @@ import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 import React, { useEffect, useState } from 'react'
 import parse from 'html-react-parser'
 import { IPB } from '~/app/types'
+import { parserOptions } from '~/app/Constants'
 
 function Page({ params }: { params: Params }) {
     const [data, setData] = useState<IPB>()
@@ -18,9 +19,9 @@ function Page({ params }: { params: Params }) {
     return (
         <section className='mb-32 text-gray-800'>
             <h1 className='mb-4 text-3xl font-bold'>
-                {data?.name && parse(data?.name)}
+                {data?.name && parse(data?.name, parserOptions)}
             </h1>
-            {data?.description && parse(data?.description)}
+            {data?.description && parse(data?.description, parserOptions)}
 
             <p>
                 Tải về:

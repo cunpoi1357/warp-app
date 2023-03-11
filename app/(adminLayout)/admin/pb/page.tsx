@@ -10,6 +10,7 @@ import { IPB } from '~/app/types'
 import CreateNewPBModal from '../components/CreateNewPBModal'
 import EditPBModal from '../components/EditPBModal'
 import Link from 'next/link'
+import { parserOptions } from '~/app/Constants'
 
 function Page() {
     const [data, setData] = useState<IPB[]>([])
@@ -108,7 +109,10 @@ function Page() {
                                     <td className='px-6 py-4'>{item.name}</td>
                                     <td className='px-6 py-4'>
                                         {item.description &&
-                                            parse(item.description)}
+                                            parse(
+                                                item.description,
+                                                parserOptions
+                                            )}
                                     </td>
                                     <td className='px-6 py-4'>
                                         <Link

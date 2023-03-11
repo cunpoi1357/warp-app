@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Section from '../components/Section'
 import { IPost } from '../types'
 import parse from 'html-react-parser'
+import { parserOptions } from '../Constants'
 
 function ThongBao() {
     const [data, setData] = useState<IPost[]>([])
@@ -29,11 +30,11 @@ function ThongBao() {
                                 target='_blank'
                                 rel='noopener noreferrer'
                             >
-                                {parse(item.title)}
+                                {parse(item.title, parserOptions)}
                             </a>
                         ) : (
                             <Link href={`/thong-bao/${item.id}`}>
-                                {parse(item.title)}
+                                {parse(item.title, parserOptions)}
                             </Link>
                         )}
                     </li>

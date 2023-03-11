@@ -9,6 +9,7 @@ import parse from 'html-react-parser'
 import CreateNewPostModal from '../components/CreateNewPostModal'
 import EditPostModal from '../components/EditPostModal'
 import AuthContext from '~/app/Context/AuthContext'
+import { parserOptions } from '~/app/Constants'
 
 function ThongBao() {
     const [data, setData] = useState<IPost[]>([])
@@ -114,11 +115,11 @@ function ThongBao() {
                                         scope='row'
                                         className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
                                     >
-                                        {parse(item.title)}
+                                        {parse(item.title, parserOptions)}
                                     </th>
                                     <td className='px-6 py-4'>
                                         {item.content
-                                            ? parse(item.content)
+                                            ? parse(item.content, parserOptions)
                                             : item.link && (
                                                   <a
                                                       href={item.link}

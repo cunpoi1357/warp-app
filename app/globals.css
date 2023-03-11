@@ -7,3 +7,7 @@
     text-shadow: 2px 0 red, -2px 0 red, 0 2px red, 0 -2px red,
     1px 1px red, -1px -1px red, 1px -1px red, -1px 1px red;
 }
+
+.quill .ql-editor img {
+    display: inline-block;
+}

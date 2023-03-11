@@ -47,6 +47,7 @@ function Quill({
             value={value}
             onChange={onChange}
             readOnly={readOnly}
+            theme='snow'
             {...props}
         />
     )
